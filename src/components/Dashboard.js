@@ -280,7 +280,7 @@ export default function Dashboard() {
   
               </div>
               <div class="w-1/3 p-4 bg-white m-4 mt-8 rounded-lg">
-                <Calendar onChange={setStartDate} value={startDate} className="   border-none" />
+                <Calendar onChange={setStartDate} value={startDate} />
                 <div className="flex justify-between items-center pt-6 pb-2">
                   <div className="flex items-center"><p className="text-lg font-semibold"> Schedule</p></div>
                   <div className="flex items-center"><p className="text-indigo-500 font-semibold">View All (9) </p></div>
