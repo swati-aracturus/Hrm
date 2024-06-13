@@ -1268,7 +1268,7 @@ const Registration = () => {
       <div className="main_container  mx-auto">
         <div className="pmd:mb-[315%] ps:mb-[270%]">
           <div className="first_container">
-            <img src="/bannerx.png" />
+            <img src="/bannerx.png" alt="" className="w-[100vw]"/>
           </div>
           {/* pink box */}
 
@@ -1283,7 +1283,7 @@ const Registration = () => {
                       id="radio1"
                       type="radio"
                       name="radiocheck"
-                      // className="hidden"
+                     
                       style={{ appearance: "none" }}
                       defaultChecked=""
                       value="Digambara"
