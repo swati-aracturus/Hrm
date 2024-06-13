@@ -519,6 +519,9 @@ const Registration = () => {
   const [profession, SetProfession] = useState("");
   const [occupation, SetOccupation] = useState("");
 
+  const [religion, SetReligion] = useState("");
+  const [community_type, SetCommunity_type] = useState("");
+
   const [physical, SetPhysical] = useState("");
   const [netincome, SetNetIncome] = useState("");
   const [address, SetAddress] = useState("");
@@ -532,7 +535,6 @@ const Registration = () => {
 
   const [residence, SetResidence] = useState("");
   const [gotra, SetGotra] = useState("");
-  const[community,setCommunity] = useState("") ;
   const [family_community, SetFamily_Community] = useState("");
   const [subCommunity, SetsubCommunity] = useState("");
 
@@ -676,11 +678,17 @@ const Registration = () => {
     SetOccupation(value);
   };
 
+  const handleReligion = (e) => {
+    const value = e?.target.value;
+    if (value !== null);
+    SetReligion(value);
+  };
+
 
   const handleCommunity = (e) => {
     const value = e.value;
     if (value !== null);
-    setCommunity(value);
+    SetCommunity_type(value);
   };
 
   const handlePhysical = (e) => {
@@ -897,13 +905,13 @@ const Registration = () => {
     }
   };
 
-  const buildFormData = (data) => {
-    const formData = new FormData();
-    data.forEach(item => {
-      formData.append(item.key, item.value);
-    });
-    return formData;
-  };
+  // const buildFormData = (data) => {
+  //   const formData = new FormData();
+  //   data.forEach(item => {
+  //     formData.append(item.key, item.value);
+  //   });
+  //   return formData;
+  // };
 
   const validateForm = () => {
     console.log(photo, id);
@@ -1035,7 +1043,7 @@ const Registration = () => {
 
 
   const registerEvent = async () => {
-   /*  const formData = [
+    const formData = [
       { key: "profile_created_by_type", value: radio, type: "text" },
       { key: "refrence_by", value: reference, type: "text" },
       { key: "whatsapp_no", value: whatsapp, type: "text" },
@@ -1053,7 +1061,6 @@ const Registration = () => {
       { key: "complexion", value: complexion, type: "text" },
       { key: "education", value: education, type: "text" },
       { key: "profession", value: profession, type: "text" },
-        { key: "community", value: community, type: "text" },
       { key: "occupation", value: occupation, type: "text" },
      { key: "candidate_community", value: community_type, type: "text" },
       { key: "marital_status", value: maritalStatus, type: "text" },
@@ -1107,99 +1114,96 @@ const Registration = () => {
       },
       { key: "photo", type: "file", value: photo },
       { key: "id_proof", type: "file", value: id },
-    ]; */
+    ]; 
 
-    const data = [
-      { key: "profile_created_by_type", value: "son", type: "text" },
-      { key: "refrence_by", value: reference, type: "text" },
-      { key: "whatsapp_no", value: whatsapp, type: "text" },
-      { key: "email", value: email, type: "text" },
-      { key: "password", value: password, type: "text" },
-      { key: "password_confirmation", value: password2, type: "text" },
-      { key: "gender", value: gender, type: "text" },
-      { key: "name", value: name, type: "text" },
-      { key: "dob", value: dob, type: "text" },
-      { key: "age", value: age, type: "text" },
-      { key: "birth_place", value: birthplace, type: "text" },
-      { key: "birth_time", value: birthTime, type: "text" },
-      { key: "height", value: height, type: "text" },
-      { key: "weight", value: weight, type: "text" },
-      { key: "complexion", value: complexion, type: "text" },
-      { key: "education", value: education, type: "text" },
-      { key: "profession", value: profession, type: "text" },
-      { key: "religion", value: community, type: "text" },
-      { key: "occupation", value: occupation, type: "text" },
-      { key: "candidate_community", value: "test", type: "text" },
-      { key: "marital_status", value: maritalStatus, type: "text" },
-      { key: "physical_status", value: physical, type: "text" },
-      { key: "blood_group", value: bloodGroup, type: "text" },
-      { key: "candidate_income", value: netincome, type: "text" },
-      { key: "candidates_address", value: address, type: "text", description: "this is a boolean value" },
-      { key: "terms_and_conditions", value: "1", type: "text" },
-      { key: "if_nri", value: isNRI, type: "text" },
-      { key: "candidate_visa", value: visa, type: "text" },
-      { key: "address_nri_citizen", value: nriAddress, type: "text" },
-      { key: "father_name", value: fname, type: "text" },
-      { key: "father_profession", value: fatherOccupation, type: "text" },
-      { key: "mother_name", value: mname, type: "text" },
-      { key: "mother_profession", value: motherOccupation, type: "text" },
-      { key: "residence_type", value: residence, type: "text" },
-      { key: "gotra", value: gotra, type: "text" },
-      { key: "family_community", value: "family_community", type: "text" },
-      { key: "family_sub_community", value: subCommunity, type: "text" },
-      { key: "family_address", value: familyAddress, type: "text" },
-      { key: "brother", value: brother, type: "text" },
-      { key: "sister", value: sister, type: "text" },
-      { key: "other_family_details", value: otherFamilydetails, type: "text" },
-      { key: "calling_no", value: phone, type: "text" },
-      { key: "are_you_manglik", value: ismanglik, type: "text" },
-      { key: "partner_age_group_from", value: ageFrom, type: "text" },
-      { key: "partner_age_group_to", value: ageTo, type: "text" },
-      { key: "partner_income", value: partner_income, type: "text" },
-      { key: "partner_country", value: selectedCountry.name, type: "text" },
-      { key: "partner_state", value: selectedState.name, type: "text" },
-      { key: "partner_city", value: selectedCity.name, type: "text" },
-      { key: "partner_education", value: partner_education, type: "text" },
-      { key: "partner_occupation", value: partner_occupation, type: "text" },
-      { key: "partner_profession", value: partner_profession, type: "text" },
-      { key: "partner_manglik", value: partner_ismannglik, type: "text" },
-      { key: "partner_marital_status", value: partner_mariatal, type: "text" },
-      { key: "astrology_matching", value: partner_astrologyMatching, type: "text" },
-      { key: "expectation_partner_details", value: partner_ExpectationDetailes, type: "text" },
-    /*   { key: "photo", type: "file", value: photo },
-    */   { key: "id_proof", type: "file", value: id },
-    ];
-    const formData = buildFormData(data);
-    Array.from(photo).forEach((file, index) => {
-      formData.append('photo[]', file, file.name);
-    });
+    // const data = [
+    //   { key: "profile_created_by_type", value: "son", type: "text" },
+    //   { key: "refrence_by", value: reference, type: "text" },
+    //   { key: "whatsapp_no", value: whatsapp, type: "text" },
+    //   { key: "email", value: email, type: "text" },
+    //   { key: "password", value: password, type: "text" },
+    //   { key: "password_confirmation", value: password2, type: "text" },
+    //   { key: "gender", value: gender, type: "text" },
+    //   { key: "name", value: name, type: "text" },
+    //   { key: "dob", value: dob, type: "text" },
+    //   { key: "age", value: age, type: "text" },
+    //   { key: "birth_place", value: birthplace, type: "text" },
+    //   { key: "birth_time", value: birthTime, type: "text" },
+    //   { key: "height", value: height, type: "text" },
+    //   { key: "weight", value: weight, type: "text" },
+    //   { key: "complexion", value: complexion, type: "text" },
+    //   { key: "education", value: education, type: "text" },
+    //   { key: "profession", value: profession, type: "text" },
+    //   { key: "religion", value: community, type: "text" },
+    //   { key: "occupation", value: occupation, type: "text" },
+    //   { key: "candidate_community", value: "test", type: "text" },
+    //   { key: "marital_status", value: maritalStatus, type: "text" },
+    //   { key: "physical_status", value: physical, type: "text" },
+    //   { key: "blood_group", value: bloodGroup, type: "text" },
+    //   { key: "candidate_income", value: netincome, type: "text" },
+    //   { key: "candidates_address", value: address, type: "text", description: "this is a boolean value" },
+    //   { key: "terms_and_conditions", value: "1", type: "text" },
+    //   { key: "if_nri", value: isNRI, type: "text" },
+    //   { key: "candidate_visa", value: visa, type: "text" },
+    //   { key: "address_nri_citizen", value: nriAddress, type: "text" },
+    //   { key: "father_name", value: fname, type: "text" },
+    //   { key: "father_profession", value: fatherOccupation, type: "text" },
+    //   { key: "mother_name", value: mname, type: "text" },
+    //   { key: "mother_profession", value: motherOccupation, type: "text" },
+    //   { key: "residence_type", value: residence, type: "text" },
+    //   { key: "gotra", value: gotra, type: "text" },
+    //   { key: "family_community", value: "family_community", type: "text" },
+    //   { key: "family_sub_community", value: subCommunity, type: "text" },
+    //   { key: "family_address", value: familyAddress, type: "text" },
+    //   { key: "brother", value: brother, type: "text" },
+    //   { key: "sister", value: sister, type: "text" },
+    //   { key: "other_family_details", value: otherFamilydetails, type: "text" },
+    //   { key: "calling_no", value: phone, type: "text" },
+    //   { key: "are_you_manglik", value: ismanglik, type: "text" },
+    //   { key: "partner_age_group_from", value: ageFrom, type: "text" },
+    //   { key: "partner_age_group_to", value: ageTo, type: "text" },
+    //   { key: "partner_income", value: partner_income, type: "text" },
+    //   { key: "partner_country", value: selectedCountry.name, type: "text" },
+    //   { key: "partner_state", value: selectedState.name, type: "text" },
+    //   { key: "partner_city", value: selectedCity.name, type: "text" },
+    //   { key: "partner_education", value: partner_education, type: "text" },
+    //   { key: "partner_occupation", value: partner_occupation, type: "text" },
+    //   { key: "partner_profession", value: partner_profession, type: "text" },
+    //   { key: "partner_manglik", value: partner_ismannglik, type: "text" },
+    //   { key: "partner_marital_status", value: partner_mariatal, type: "text" },
+    //   { key: "astrology_matching", value: partner_astrologyMatching, type: "text" },
+    //   { key: "expectation_partner_details", value: partner_ExpectationDetailes, type: "text" },
+    // /*   { key: "photo", type: "file", value: photo },
+    // */   { key: "id_proof", type: "file", value: id },
+    // ];
+    // const formData = buildFormData(data);
+    // Array.from(photo).forEach((file, index) => {
+    //   formData.append('photo[]', file, file.name);
+    // });
 
 
-    console.log(...formData);
+    console.log(formData);
 
-    
-    // return false;
-
-    // await axios
-    //   .post("https://api.shreevct.com/api/register", { formData:formData })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    try {
-      const response = await axios.post("https://api.shreevct.com/api/register", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    await axios
+      .post("https://api.shreevct.com/api/register", { formData:formData })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
       });
+
+    // try {
+    //   const response = await axios.post("https://api.shreevct.com/api/register", formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   });
   
-      console.log('Success:', response.data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    //   console.log('Success:', response.data);
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
 
   };
 
@@ -2432,7 +2436,7 @@ const Registration = () => {
                     </span>
                   </label>
 
-                  <div className="flex items-center justify-center w-full">
+                  {/* <div className="flex items-center justify-center w-full">
                     <label
                       htmlFor="dropzone-file1"
                       className="flex flex-col items-center justify-center w-full h-44 border-2 
@@ -2531,7 +2535,7 @@ const Registration = () => {
                     <span className="text-red-500 ">
                       NOTE_ Without ID’s Proof Account can not be verified.
                     </span>
-                  </label>
+                  </label> */}
                   <div className=" md:flex mb-3 pt-8">
                     <div className="md:w-1/2 ps:px-0 px-3  md:mb-0">
                       <label
