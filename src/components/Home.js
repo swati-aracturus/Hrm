@@ -1,15 +1,18 @@
 import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Select from "react-select";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { City, Country, State } from "country-state-city";
+import { type } from "@testing-library/user-event/dist/type";
 
 const Registration = () => {
+
+  const formdata = new FormData();
   const notify = () => toast.success("Successfully Registered In!");
- 
+
   // login popup
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupRef = useRef(null);
@@ -167,7 +170,7 @@ const Registration = () => {
     { value: "Dark skin", label: "Dark skin" },
   ];
 
- 
+
   const Family_Type = [
     { value: "Nuclear", label: "Nuclear" },
     { value: "Joint", label: "Joint" },
@@ -198,7 +201,7 @@ const Registration = () => {
     { value: "Registered partnership", label: "Registered partnership" },
   ];
 
-  
+
 
 
   const Heights = [
@@ -422,7 +425,7 @@ const Registration = () => {
     { value: "200 kg", label: "200 kg" },
   ];
 
-  
+
   const Income = [
     { value: "1 - 2 L", label: "1 - 2 L" },
     { value: "2 - 3 L", label: "2 - 3 L" },
@@ -491,15 +494,15 @@ const Registration = () => {
     { value: "Non Working", label: "Non Working" },
   ];
 
-  
-  const Community = [ 
+
+  const Community = [
     { value: "Digambara", label: "Digambara" },
     { value: "Svetambara", label: "Svetambara" },
   /*   { value: "Agarwal", label: "Agarval" },
     { value: "Khandelwal", label: "Khandelwal" },
  */  ];
- 
- 
+
+
 
   const [reference, SetReference] = useState("");
   const [whatsapp, SetWhatsapp] = useState("");
@@ -580,7 +583,7 @@ const Registration = () => {
     SetReference(value);
   };
 
-  
+
 
   const handleWhatsappNo = (e) => {
     const value = e?.target.value;
@@ -905,21 +908,21 @@ const Registration = () => {
     }
   };
 
-  // const buildFormData = (data) => {
-  //   const formData = new FormData();
-  //   data.forEach(item => {
-  //     formData.append(item.key, item.value);
-  //   });
-  //   return formData;
-  // };
+  const buildFormData = (data) => {
+    const formData = new FormData();
+    data.forEach(item => {
+      formData.append(item.key, item.value);
+    });
+    return formData;
+  };
 
   const validateForm = () => {
     console.log(photo, id);
 
     if (!reference.trim()) {
       toast.error("Reference is required");
-    } 
-     else if (!whatsapp.trim()) {
+    }
+    else if (!whatsapp.trim()) {
       toast.error("WhatsApp number is required");
     } else if (!email.trim()) {
       toast.error("Email is required");
@@ -953,10 +956,9 @@ const Registration = () => {
       toast.error("Profession is required");
     } else if (!occupation.trim()) {
       toast.error("Occupation is required");
-    } /* else if (!community.trim()) {
+    } else if (!community_type.trim()) {
       toast.error("Community is required");
-      
-    } */  else if (!physical.trim()) {
+    } else if (!physical.trim()) {
       toast.error("Physical status is required");
     } else if (!netincome.trim()) {
       toast.error("Your Income is required");
@@ -964,7 +966,7 @@ const Registration = () => {
       toast.error("Address is required");
     } else if (isNRI === undefined) {
       toast.error("NRI status is required");
-    } else if (isNRI === "Yes") {
+    } else if (!isNRI === "Yes") {
       if (!visa.trim()) {
         toast.error("Visa is required for NRI");
         return false;
@@ -984,9 +986,9 @@ const Registration = () => {
       toast.error("Residence is required");
     } else if (!gotra.trim()) {
       toast.error("Gotra is required");
-    }/*  else if (!family_community.trim()) {
+    } else if (!family_community.trim()) {
       toast.error("Family community is required");
-    }  */else if (!subCommunity.trim()) {
+    } else if (!subCommunity.trim()) {
       toast.error("Sub-community is required");
     } else if (!familyAddress.trim()) {
       toast.error("Family address is required");
@@ -1000,11 +1002,13 @@ const Registration = () => {
       toast.error("Manglik status is required");
     } else if (!phone.trim()) {
       toast.error("Phone number is required");
-    } else if (!photo) {
-      toast.error("Photo is required");
-    } else if (!id) {
-      toast.error("ID is required");
-    } else if (!partner_income.trim()) {
+    }
+    // else if (!photo) {
+    //   toast.error("Photo is required");
+    // } else if (!id) {
+    //   toast.error("ID is required");
+    // }
+    else if (!partner_income.trim()) {
       toast.error("Partner's income is required");
     } else if (!selectedCountry.name.trim()) {
       toast.error("Partner's country is required");
@@ -1043,168 +1047,95 @@ const Registration = () => {
 
 
   const registerEvent = async () => {
-    const formData = [
-      { key: "profile_created_by_type", value: radio, type: "text" },
-      { key: "refrence_by", value: reference, type: "text" },
-      { key: "whatsapp_no", value: whatsapp, type: "text" },
-      { key: "email", value: email, type: "text" },
-      { key: "password", value: password, type: "text" },
-      { key: "password_confirmation", value: password2, type: "text" },
-      { key: "gender", value: gender, type: "text" },
-      { key: "name", value: name, type: "text" },
-      { key: "dob", value: dob, type: "text" },
-      { key: "age", value: age, type: "text" },
-      { key: "birth_place", value: birthplace, type: "text" },
-      { key: "birth_time", value: birthTime, type: "text" },
-      { key: "height", value: height, type: "text" },
-      { key: "weight", value: weight, type: "text" },
-      { key: "complexion", value: complexion, type: "text" },
-      { key: "education", value: education, type: "text" },
-      { key: "profession", value: profession, type: "text" },
-      { key: "occupation", value: occupation, type: "text" },
-     { key: "candidate_community", value: community_type, type: "text" },
-      { key: "marital_status", value: maritalStatus, type: "text" },
-      { key: "physical_status", value: physical, type: "text" },
-      { key: "blood_group", value: bloodGroup, type: "text" },
-      { key: "candidate_income", value: netincome, type: "text" },
-      {
-        key: "candidates_address",
-        value: address,
-        type: "text",
-        description: "this is a boolean value",
+    formdata.append("profile_created_by_type", 'self');
+    formdata.append("refrence_by", reference);
+    formdata.append("whatsapp_no", whatsapp);
+    formdata.append("email", email);
+    formdata.append("password", password);
+    formdata.append("password_confirmation", password2);
+    formdata.append("gender", gender);
+    formdata.append("name", name);
+    formdata.append("dob", dob);
+    formdata.append("age", age);
+    formdata.append("birth_place", birthplace);
+    formdata.append("birth_time", birthTime);
+    formdata.append("height", height);
+    formdata.append("weight", weight);
+    formdata.append("complexion", complexion);
+    formdata.append("education", education);
+    formdata.append("profession", profession);
+    formdata.append("occupation", occupation);
+    formdata.append("religion", religion);
+    formdata.append("candidate_community", community_type);
+    formdata.append("marital_status", maritalStatus);
+    formdata.append("physical_status", physical);
+    formdata.append("blood_group", bloodGroup);
+    for ( let i = 0;i<5;i++){
+      formdata.append(`partner_hobbies[${i}]`, i);
+    }
+    formdata.append("candidate_income", "12k");
+    formdata.append("candidates_address", "Lorem Ipsum address");
+    formdata.append("terms_and_conditions", "1");
+    formdata.append("if_nri", 'No');
+    formdata.append("candidate_visa", "Lorem Ipsum text");
+    formdata.append("address_nri_citizen", "Lorem Ipsum text");
+    formdata.append("father_name", "Johan Sharma");
+    formdata.append("father_profession", " S/W");
+    formdata.append("mother_name", "Janki Sharma");
+    formdata.append("mother_profession", "Teacher");
+    formdata.append("residence_type", "rented");
+    formdata.append("gotra", "Lorem Ipsum text");
+    formdata.append("family_status", "rich");
+    formdata.append("family_type", "modern");
+    formdata.append("family_sub_community", "Lorem Ipsum text");
+    formdata.append("family_address", "Lorem Ipsum text address");
+    formdata.append("brother", "1");
+    formdata.append("family_community", "1");
+    formdata.append("sister", "1");
+    formdata.append("other_family_details", "Lorem Ipsum has been the industry's standard dummy text");
+    formdata.append("calling_no", "7865432123");
+    formdata.append("are_you_manglik", "no");
+    formdata.append("partner_age_group_from", "22");
+    formdata.append("partner_age_group_to", "23");
+    formdata.append("partner_income", "12k");
+    formdata.append("partner_country", "India");
+    formdata.append("partner_state", "MP");
+    formdata.append("partner_city", "Indore");
+    formdata.append("partner_education", "MCA");
+    formdata.append("partner_occupation", "Bank");
+    formdata.append("partner_profession", "Lorem Ipsum text");
+    formdata.append("partner_manglik", "no");
+    formdata.append("partner_hobbies[]", "2");
+    formdata.append("partner_hobbies[]", "3");
+    formdata.append("partner_marital_status", "Single");
+    formdata.append("astrology_matching", "yes");
+    formdata.append("expectation_partner_details", "Lorem Ipsum textLorem Ipsum text");
+    formdata.append("photo[]", photo);
+    formdata.append("id_proof", id);
+    // apis calling
+    let config = {
+      method: 'POST',
+      responseType: 'json',
+      url: 'https://api.shreevct.com/api/register',
+      headers: {
+       'Content-Type': 'multipart/form-data', 
       },
-      { key: "terms_and_conditions", value: "1", type: "text" },
-      { key: "if_nri", value: isNRI, type: "text" },
-      { key: "candidate_visa", value: visa, type: "text" },
-      { key: "address_nri_citizen", value: nriAddress, type: "text" },
-      { key: "father_name", value: fname, type: "text" },
-      { key: "father_profession", value: fatherOccupation, type: "text" },
-      { key: "mother_name", value: mname, type: "text" },
-      { key: "mother_profession", value: motherOccupation, type: "text" },
-      { key: "residence_type", value: residence, type: "text" },
-      { key: "gotra", value: gotra, type: "text" },
-      { key: "family_community", value: family_community, type: "text" },
-      { key: "family_sub_community", value: subCommunity, type: "text" },
-      { key: "family_address", value: familyAddress, type: "text" },
-      { key: "brother", value: brother, type: "text" },
-      { key: "sister", value: sister, type: "text" },
-      { key: "other_family_details", value: otherFamilydetails, type: "text" },
-      { key: "calling_no", value: phone, type: "text" },
-      { key: "are_you_manglik", value: ismanglik, type: "text" },
-      { key: "partner_age_group_from", value: ageFrom, type: "text" },
-      { key: "partner_age_group_to", value: ageTo, type: "text" },
-      { key: "partner_income", value: partner_income, type: "text" },
-      { key: "partner_country", value: selectedCountry.name, type: "text" },
-      { key: "partner_state", value: selectedState.name, type: "text" },
-      { key: "partner_city", value: selectedCity.name, type: "text" },
-      { key: "partner_education", value: partner_education, type: "text" },
-      { key: "partner_occupation", value: partner_occupation, type: "text" },
-      { key: "partner_profession", value: partner_profession, type: "text" },
-      { key: "partner_manglik", value: partner_ismannglik, type: "text" },
-      { key: "partner_marital_status", value: partner_mariatal, type: "text" },
-      {
-        key: "astrology_matching",
-        value: partner_astrologyMatching,
-        type: "text",
-      },
-      {
-        key: "expectation_partner_details",
-        value: partner_ExpectationDetailes,
-        type: "text",
-      },
-      { key: "photo", type: "file", value: photo },
-      { key: "id_proof", type: "file", value: id },
-    ]; 
+      data: formdata,
+    };
 
-    // const data = [
-    //   { key: "profile_created_by_type", value: "son", type: "text" },
-    //   { key: "refrence_by", value: reference, type: "text" },
-    //   { key: "whatsapp_no", value: whatsapp, type: "text" },
-    //   { key: "email", value: email, type: "text" },
-    //   { key: "password", value: password, type: "text" },
-    //   { key: "password_confirmation", value: password2, type: "text" },
-    //   { key: "gender", value: gender, type: "text" },
-    //   { key: "name", value: name, type: "text" },
-    //   { key: "dob", value: dob, type: "text" },
-    //   { key: "age", value: age, type: "text" },
-    //   { key: "birth_place", value: birthplace, type: "text" },
-    //   { key: "birth_time", value: birthTime, type: "text" },
-    //   { key: "height", value: height, type: "text" },
-    //   { key: "weight", value: weight, type: "text" },
-    //   { key: "complexion", value: complexion, type: "text" },
-    //   { key: "education", value: education, type: "text" },
-    //   { key: "profession", value: profession, type: "text" },
-    //   { key: "religion", value: community, type: "text" },
-    //   { key: "occupation", value: occupation, type: "text" },
-    //   { key: "candidate_community", value: "test", type: "text" },
-    //   { key: "marital_status", value: maritalStatus, type: "text" },
-    //   { key: "physical_status", value: physical, type: "text" },
-    //   { key: "blood_group", value: bloodGroup, type: "text" },
-    //   { key: "candidate_income", value: netincome, type: "text" },
-    //   { key: "candidates_address", value: address, type: "text", description: "this is a boolean value" },
-    //   { key: "terms_and_conditions", value: "1", type: "text" },
-    //   { key: "if_nri", value: isNRI, type: "text" },
-    //   { key: "candidate_visa", value: visa, type: "text" },
-    //   { key: "address_nri_citizen", value: nriAddress, type: "text" },
-    //   { key: "father_name", value: fname, type: "text" },
-    //   { key: "father_profession", value: fatherOccupation, type: "text" },
-    //   { key: "mother_name", value: mname, type: "text" },
-    //   { key: "mother_profession", value: motherOccupation, type: "text" },
-    //   { key: "residence_type", value: residence, type: "text" },
-    //   { key: "gotra", value: gotra, type: "text" },
-    //   { key: "family_community", value: "family_community", type: "text" },
-    //   { key: "family_sub_community", value: subCommunity, type: "text" },
-    //   { key: "family_address", value: familyAddress, type: "text" },
-    //   { key: "brother", value: brother, type: "text" },
-    //   { key: "sister", value: sister, type: "text" },
-    //   { key: "other_family_details", value: otherFamilydetails, type: "text" },
-    //   { key: "calling_no", value: phone, type: "text" },
-    //   { key: "are_you_manglik", value: ismanglik, type: "text" },
-    //   { key: "partner_age_group_from", value: ageFrom, type: "text" },
-    //   { key: "partner_age_group_to", value: ageTo, type: "text" },
-    //   { key: "partner_income", value: partner_income, type: "text" },
-    //   { key: "partner_country", value: selectedCountry.name, type: "text" },
-    //   { key: "partner_state", value: selectedState.name, type: "text" },
-    //   { key: "partner_city", value: selectedCity.name, type: "text" },
-    //   { key: "partner_education", value: partner_education, type: "text" },
-    //   { key: "partner_occupation", value: partner_occupation, type: "text" },
-    //   { key: "partner_profession", value: partner_profession, type: "text" },
-    //   { key: "partner_manglik", value: partner_ismannglik, type: "text" },
-    //   { key: "partner_marital_status", value: partner_mariatal, type: "text" },
-    //   { key: "astrology_matching", value: partner_astrologyMatching, type: "text" },
-    //   { key: "expectation_partner_details", value: partner_ExpectationDetailes, type: "text" },
-    // /*   { key: "photo", type: "file", value: photo },
-    // */   { key: "id_proof", type: "file", value: id },
-    // ];
-    // const formData = buildFormData(data);
-    // Array.from(photo).forEach((file, index) => {
-    //   formData.append('photo[]', file, file.name);
-    // });
+    axios.request(config)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.data?.status === false) {
+          console.log('registerEvent__________>', JSON.stringify(result));
+        } else {
+          console.log('registerError__________>', JSON.stringify(result));
+        }
+      }).catch((error) => {
+        toast.error(error?.response?.data?.message + ' \n ' + error?.response?.data?.error_message)
+        console.log('errorr___________>', JSON.stringify(error?.response?.data))
 
-
-    console.log(formData);
-
-    await axios
-      .post("https://api.shreevct.com/api/register", { formData:formData })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
       });
-
-    // try {
-    //   const response = await axios.post("https://api.shreevct.com/api/register", formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   });
-  
-    //   console.log('Success:', response.data);
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
-
   };
 
   const [countryData, setCountryData] = useState([]);
@@ -1272,7 +1203,7 @@ const Registration = () => {
       <div className="main_container  mx-auto">
         <div className="pmd:mb-[315%] ps:mb-[270%]">
           <div className="first_container">
-            <img src="/bannerx.png" alt="" className="w-[100vw]"/>
+            <img src="/bannerx.png" alt="" className="w-[100vw]" />
           </div>
           {/* pink box */}
 
@@ -1287,7 +1218,7 @@ const Registration = () => {
                       id="radio1"
                       type="radio"
                       name="radiocheck"
-                     
+
                       style={{ appearance: "none" }}
                       defaultChecked=""
                       value="Digambara"
@@ -1602,15 +1533,15 @@ const Registration = () => {
                       >
                         Reference By<span className="text-red-500 ">*</span>
                       </label><Select
-                        options={Reference} required 
+                        options={Reference} required
                         className="text-gray-600 border border-gray-400 mt-2"
                         onChange={(e) => handleReference(e)} placeholder=""
                         id="company"
                         type="text"
                       />
-                     
+
                     </div>
-                  
+
                   </div>
                   <div className=" md:flex mb-6">
                     <div className="md:w-1/2 ps:px-0 px-3 mb-6 md:mb-0">
@@ -1627,7 +1558,7 @@ const Registration = () => {
                         id="company"
                         type="text"
                       />
-                   
+
                     </div>
                     <div className="md:w-1/2 ps:px-0 px-3 mb-6 md:mb-0">
                       <label
@@ -1938,7 +1869,7 @@ const Registration = () => {
                       <div></div>
                     </div>
                   </div>
-                 
+
                   <div className=" md:flex mb-6">
                     <div className="md:w-1/2 ps:px-0 px-3 mb-6 md:mb-0">
                       <label
@@ -2287,12 +2218,12 @@ const Registration = () => {
                       >
                         Community<span className="text-red-500 ">*</span>
                       </label>
-                  <Select
+                      <Select
                         required
                         onChange={(e) => handleCommunity(e)}
                         options={Community}
-                        className="text-gray-600 border border-gray-400 mt-2"/>
- 
+                        className="text-gray-600 border border-gray-400 mt-2" />
+
                       <div></div>
                     </div>
                     <div className="md:w-1/2 ps:px-0 px-3 mb-6 md:mb-0">
@@ -2306,7 +2237,7 @@ const Registration = () => {
                         required
                         onChange={(e) => handlesub_community(e)}
                         className="w-full  text-gray-600 border border-gray-400 rounded py-[5.5px] px-4 mb-3 mt-2"
-                     
+
                         type="text"
                       />
                       <div></div>
@@ -2426,7 +2357,7 @@ const Registration = () => {
                       <div></div>
                     </div>
                   </div>
-                  <label
+                  {/* <label
                     className=" tracking-wide text-gray-600 text-sm font-bold mb-2"
                     htmlFor="company"
                   >
@@ -2436,7 +2367,7 @@ const Registration = () => {
                     </span>
                   </label>
 
-                  {/* <div className="flex items-center justify-center w-full">
+                   <div className="flex items-center justify-center w-full">
                     <label
                       htmlFor="dropzone-file1"
                       className="flex flex-col items-center justify-center w-full h-44 border-2 
@@ -2811,7 +2742,7 @@ const Registration = () => {
                   <div className="flex justify-center py-4 mt-[5%]">
                     <button
                       className="w-48 ps:w-36   pm:py-1 pm:!text-[14px] text-lg font-bold ps:!text-[16px]  py-2 text-white rounded-[10px] bg-pink-600 hover:bg-pink-700 focus:outline-none  focus:ring focus:ring-pink-400 "
-                      onClick={validateForm}
+                      onClick={registerEvent}
                     >
                       Register Now
                     </button>
